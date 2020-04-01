@@ -1,0 +1,17 @@
+To see network details
+	$ip a
+
+1. Configuring network address
+	
+	1.1 Using configration file
+		/etc/sysconfig/network-scripts/<network-interface-file>
+
+		Network scripts are deprecated in Red Hat Enterprise Linux 8 and
+		they are no longer provided by default.
+	
+		Network interfaces in Debian/Ubuntu are not defined by files in
+			/etc/sysconfig/network-scripts 
+		(there isn't even a /etc/sysconfig directory), but by /etc/network/interfaces
+
+
+	1.2 Using NetworkManager
