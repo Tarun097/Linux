@@ -15,3 +15,12 @@ To see network details
 
 
 	1.2 Using NetworkManager
+		CentOS comes with NetworkManager enabled
+
+		To start NetworkManger
+
+			$systemctl start NetworkManager
+
+		To enable NetworkManger automatically at boot time
+
+			$systemctl enable NetworkManger //Start

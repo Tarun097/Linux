@@ -1,0 +1,69 @@
+Docker :
+
+
+	1. Why docker ?
+		
+		To install and run your software , 
+		not just on your computer or laptop but on any other PC as well (on any cloud based computing platform)
+
+		Docker makes it really easy to install and run software without worrying about setup or dependencies 
+
+
+	2. Docker image 
+
+		It is single file with all dependencies and configurations required to run a specific program
+
+	3. Container 
+
+		It is running instance of an image
+
+	Docker consist of a client (Docker cli) and server (Docker daemon)
+		User interacts with client and types in all the commands, these are then sent to docker daemon.
+		Docker daemon handles many task like 
+			- building an image,
+			- creating & running a container,
+			- pushing and downloading an images
+
+	Docker is based upon linux concepts :
+		1. Namespaces : 
+		2. Control groups (cgroup) : 
+
+	Docker image consist of FS snapshot and info about first command to execute.
+		
+
+
+
+
+Commands :
+
+	Docker run <image-name>
+		//Creates and run a container based on images. Run is equal to create container and start container
+
+	Docker create <image-name>
+		//Creates a container and returns it's ID
+
+	Docker start -a <Container_ID>
+		//Starts a container of specified ID, -a options tracks the container output
+
+	Docker logs <Container_ID>
+		//Retrives logs (output of that container instance) , can be used if container started with -a option
+	
+	Docker ps
+		//List all the running container
+
+	Docker ps --all
+		//List down all the containers run untill now
+
+	Docker system prune
+		//Deletes all the containers in stopped state
+
+	Docker stop <Container_ID>
+		//Send a SIGTERM (terminate signal) to container, allowing it to perform cleanup and stop
+		//If container does not responds to SIGTERM, after 10 seconds , a SIGKILL is issued
+
+	Docker kill <Container_ID>
+		//Send a SIGKILL command to kill that container instantly
+
+
+
+		

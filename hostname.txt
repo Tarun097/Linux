@@ -1,0 +1,13 @@
+hostnamectl :
+	Gives info about system, including the current hostname
+
+reads information from /etc/hostname
+
+Set static hostname:
+	hostnamectl --static set-hostname "ubuntu"
+
+Set pretty hostname
+	hostnamectl --pretty set-hostname "Ubuntu"
+
+System restart is required after hostname change.
+Above two commands will update contents of /etc/hostname
