@@ -30,14 +30,60 @@ Docker :
 
 	Docker image consist of FS snapshot and info about first command to execute.
 		
+	Containers are isolated from each other.
+
+	Docker image is build from Dockerfile
+
+		It consists of instructions and arguments 
+		Should specify a base image, commands to install dependencies and startup command of container
 
 
+		Sample Dockerfile content:
+
+			FROM ubuntu:latest
+
+			RUN mkdir -p /home/HelloWorld
+
+			COPY ./Hello /home/HelloWorld/
+
+			CMD /home/HelloWorld/Hello
+
+		FROM - Specifies a base image
+		RUN  - used to install dependencies 
+		CMD  - Specifies a startup commands
+
+		At each step a container is created from the previos step image and modifications are made
+		to this instance, container is saved into intermediate image.
+
+		Ex: Here Ubuntu base image is used to create a container,
+		mkdir cmd is run, container is saved into image, say {image1}
+		New container is created from {image1}, COPY cmd is run, again saved into {image2}
+		Container is created from {image2}, CMD command is added as startup command, saved as {image3}.
+		{image3} is the final output image.
+
+
+		To build image from docker file
+		$sudo docker build . 		//This will create an image with id
+
+		To tag an image with readable name (<DockerID/Project:Version>)
+		$sudo docker -t Tarun097/CppHelloWorld:latest
+
+
+	New image can be created from running instance of container.
+		$sudo docker commit -c 'CMD ["startup-cmd"]' <container-id>
+				
 
 
 Commands :
 
 	Docker run <image-name>
 		//Creates and run a container based on images. Run is equal to create container and start container
+
+	Docker run <image-name> <command>
+		//This will replace the startup command within container with specified command
+
+	Docker run -it <image-name>
+		//attach the input to container's input
 
 	Docker create <image-name>
 		//Creates a container and returns it's ID
@@ -63,6 +109,10 @@ Commands :
 
 	Docker kill <Container_ID>
 		//Send a SIGKILL command to kill that container instantly
+
+	Docker exec -it <Container_ID> <Command_you_want_to_run_inside_container>
+		//Runs another command inside the container, -it attaches the input to container's input stream
+
 
 
 
