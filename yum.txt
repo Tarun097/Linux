@@ -1,0 +1,17 @@
+Yum (Yellowdog Updater, Modified)
+
+	- Package manager
+	- interface to underlying rpm package manager
+
+	To check repo list
+		$yum repolist
+	
+	To check all the repos (both enabled and disabled)
+		$yum repolist --all
+
+	To search package
+		$yum search <package-name>
+
+	To install package
+		$yum install <package-name>	
+		//Searches for updated package in repo and installs it
