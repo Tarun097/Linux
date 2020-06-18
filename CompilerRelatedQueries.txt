@@ -1,0 +1,25 @@
+1. Why Application compiled as .exe generates .lib ?
+
+> This is normal if one or more functions is/are exported from your executable.
+> This can occour when you include a .h file of the dll project into the app project,
+  which contains a class marked with __declspec(dllexport)
+
+2. Static vs Dynamic lib ?
+
+Static libraries, while reusable in multiple programs, are locked into a program at compile time.
+Dynamic, or shared libraries on the other hand, exist as separate files outside of the executable file.
+
+The downside of using a static library is that it’s code is locked into the final executable file 
+and cannot be modified without a re-compile of exe.
+
+In contrast, a dynamic library can be modified without a need to re-compilation of exe.
+The downside of using a dynamic library is that a program is much more susceptible to breaking.
+The upside of using a dynamic library is that multiple running applications can use the same library
+without the need for each to have it’s own copy.
+
+Another benefit of using static libraries is execution speed at run-time. Because the it’s object code (binary) is already included
+in the executable file, multiple calls to functions can be handled much more quickly than a dynamic library’s code, 
+which needs to be called from files outside of the executable.
+
+If you have a lot of files, multiple copies of a static library means an increase in the executable file’s size. 
+If, however, the benefits of execution time outweigh the need to save space, the static library is the way to go.
