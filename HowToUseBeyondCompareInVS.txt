@@ -3,32 +3,30 @@ To use Beyond Compare in Visual Studio to compare file and merge, change the .gi
 Add below lines :
 
 [diff]
-    tool = bc4
+
+tool = bc4
+
+
 [difftool "bc4"]
-    cmd = \"C:\\Program Files\\Beyond Compare 4\\BComp.exe\" \"$LOCAL\" \"$REMOTE\"
+    
+cmd = \"C:\\Program Files\\Beyond Compare 4\\BComp.exe\" \"$LOCAL\" \"$REMOTE\"
+
+
 [merge]
-    tool = bc4
+    
+tool = bc4
+
+
 [mergetool "bc4"]
-    cmd = \"C:\\Program Files\\Beyond Compare 4\\BComp.exe\" \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
+    
+cmd = \"C:\\Program Files\\Beyond Compare 4\\BComp.exe\" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
 
 
 
 
 
 
-GIT FOR WINDOWS
-BC3 logo BC version 3 or 4
-Diff
-At a Windows command prompt, enter the commands:
-  git config --global diff.tool bc
-  git config --global difftool.bc.path "c:/Program Files/Beyond Compare 4/bcomp.exe"
-Note: For Git versions older than 2.2 (git --version) replace "bc" with "bc3" in the above instructions.
 
-3-way Merge Pro only
-At a Windows command prompt, enter the commands:
-  git config --global merge.tool bc
-  git config --global mergetool.bc.path "c:/Program Files/Beyond Compare 4/bcomp.exe"
-Note: For Git versions older than 2.2.0 (git --version) replace "bc" with "bc3" in the above instructions.
 
 Launching Diffs and Merges
 File Diff:
