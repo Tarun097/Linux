@@ -1,0 +1,92 @@
+how to create rpm package:
+
+	https://opensource.com/article/18/9/how-build-rpm-packages
+
+
+Configuring yum repository over httpd
+
+1. Create a directory for you local repository, e.g. /home/repository:
+
+	# mkdir /home/repository
+
+2. Move the RPMs into the directory you just created.
+ 
+3. Assign appropriate ownership and filesystem permissions to the local repo directory.
+
+	# chown -R root.root /home/mypackage_dir/repo
+
+4. Install the createrepo package if not installed yet, and run:
+
+	# createrepo /home/repository
+	# chmod -R o-w+r /home/repository
+
+5. Create a repository configuration file, e.g. /etc/yum.repos.d/customrepo.repo containing below configuration.
+
+	[myrepo]
+	name=Custom repository
+	baseurl=file:///home/repository
+	enabled=1
+	gpgcheck=0
+
+6. Before you configure the repository over httpd make sure it is working on the local host where is it hosted.
+   Install your package using yum, replace package_name with the package you want to install and locate on /home/repository :
+
+	# yum install package_name
+
+
+Installing and configuring httpd
+To use the yum repository configured on repo_server on client_system through http url please follow the below instructions.
+
+1. Install and setup apache server.
+
+	# yum install httpd
+
+2. You can either store the rpms in the default document root for httpd i.e. /var/www/html/repo or you can create a soft link between the document root and the repository directory. For the purpose of this post we are using a different directory that the document root.
+
+	# ln -s /home/repository /var/www/html/repo
+
+3. Add firewall rule
+	
+	#firewall-cmd --add-service=http
+
+4. Start the httpd service.
+
+	# service httpd start
+
+
+
+Issue with selinux:
+
+To check if selinux is enabled
+	#getenforce
+	>enforcing
+	
+To disable selinux
+	#setenforce 0
+
+If you want to allow httpd to read user content,
+then you must tell SELinux about this by enabling the 'httpd_read_user_content' boolean.	
+
+	#setsebool -P httpd_read_user_content 1
+
+
+
+Verify the repository access from the client system
+1. Verify if you can access the repository url from the browser. 
+The url in our case would be http://[repo_server-ip]/repo
+
+2. On the client system configure .repo file as below. 
+The .repo file can have any name of your choice and it recides in the directory /etc/yum.repos.d.
+
+	#vi /etc/yum.repos.d/myrepo.repo
+
+		[repo_server-repo]
+		name=Custom repository
+		baseurl=http://[repo_server-ip]/repo
+		enabled=1
+		gpgcheck=0
+
+3. Then run the below command on client system followed by yum update to update the machine.
+
+# yum repolist
+# yum update
