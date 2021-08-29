@@ -24,3 +24,10 @@ To see network details
 		To enable NetworkManger automatically at boot time
 
 			$systemctl enable NetworkManger //Start
+
+
+2. use nmcli
+	$nmcli d //list the network interfaces
+	
+	$nmcli con up id 'enp0s3'  //enp0s3 - here is network interface name
+	
