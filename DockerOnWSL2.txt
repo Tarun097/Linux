@@ -1,0 +1,103 @@
+WSL
+
+	wsl -l -v
+
+		//checks list of installed distros
+
+	wsl -l -o 
+		
+		//checks list of online available distros
+
+	wsl --terminate Ubuntu
+		//Shutdown the instance
+
+
+
+Docker:
+	sudo service docker status
+		
+	sudo service docker start
+	
+	sudo docker version
+
+
+	- List docker images
+
+		> docker images
+
+		> docker image ls
+
+	- Build image 
+
+		> docker build -t <image-tag> .    //Run in the dir containing Dockerfile
+
+	- Run container from image
+
+		> docker run <image_name>
+
+		//Override default command of image
+		> docker run <image_name>  command_you_want_to_execute   
+
+
+		> docker run = docker create <image_name> + docker start <container_id>
+
+
+			> docker start -a <container_id>   //-a (attach to the container) prints output from container
+			
+
+	- List all running containers
+		
+		>docker ps
+
+	
+		//list all container which ran in past
+
+
+	- Clear and reclaim space
+
+		> docker system prune
+			// remove all stopped containers
+			// clear local image cache
+		
+
+	- logs
+		
+		> docker logs <container_id>
+
+
+	- Stop the container
+
+		> docker stop <container_id>   //Gives 10s to shut down, after which KILL signal is sent
+
+
+		> docker kill  <container_id>
+
+
+	- Execute another command apart from start up command of container
+
+		> docker exec -it <container_id> second_command
+				//-it allows to provide input to the container
+
+		//Most common use of exec is to get command prompt in a container
+			> docker exec -it <container_id> sh
+
+
+		//Get command prompt of empty container (startup command is not run)
+			> docker run -it <image> sh
+
+
+
+
+
+Dockerfile:
+
+	FROM  //specify base image
+	
+	RUN  //used to execute some command while we are preparing image 
+	
+	CMD	 //specify startup command of container
+	
+
+Create image from running container	
+	> docker commit -c "startup_command" container_id
+
