@@ -1,3 +1,26 @@
+Installation :
+
+	Follow the steps here : 
+	https://docs.docker.com/engine/install/ubuntu/
+	
+	Install docker-compose 
+	sudo apt-get install docker-compose
+	
+	To avoid running docker service again and again on every WSL startup
+	In /etc/wsl.conf
+	
+		[boot]
+		command="service docker start"
+		
+Run docker without sudo:
+
+	sudo addgroup --system docker
+	sudo adduser $USER docker
+	newgrp docker
+	# And something needs to be done so $USER always runs in group `docker` on the `Ubuntu` WSL
+	sudo chown root:docker /var/run/docker.sock
+	sudo chmod g+w /var/run/docker.sock
+
 WSL
 
 	wsl -l -v
@@ -30,6 +53,8 @@ Docker:
 	- Build image 
 
 		> docker build -t <image-tag> .    //Run in the dir containing Dockerfile
+		
+		> docker build -f Dockerfile.dev   //In case of customName docker file to build image
 
 	- Run container from image
 
@@ -97,7 +122,67 @@ Dockerfile:
 	
 	CMD	 //specify startup command of container
 	
+	WORKDIR /usr/app
+		//Any following command will be executed relative to this path in the container
+		//If above folder is not there, it will be created
+			
+			
+	
 
 Create image from running container	
 	> docker commit -c "startup_command" container_id
+	
+	
+	
+	
+	
+	
+Docker run with port mapping
+	
+	sudo docker run -p {route incoming requests to this port on local host to..} : {..this port inside container}  <image>
+
+	sudo docker run -p 80:8080 tarun097/simpleweb
+
+
+Docker Compose
+	//Used to start up multiple docker containers at the same time
+	//Automates some of the long-winded arguments we pass to 'docker run'
+
+	docker-compose up  // will run the images
+	
+	docker-compose up --build //will build images first and then run
+	
+	docker-compose down  //stop all the containers
+	
+	docker-compose ps  //status of containers specified in docker-compose.yml file
+	
+	-d option to do in backgroud , you get control backgroud
+	
+		ex : docker-compose up -d
+			 docker-compose down -d
+			 
+	NOTE : docker-compse command should be run from the dir where you have docker-compse.yml file
+			 
+	
+
+
+
+Docker volumes:
+
+	docker run -p 3000:3000 -v /app/node_modules  -v $(pwd):/app <image_id>
+					
+						//Map the pwd into the '/app' folder
+
+
+On WSL2 there are permissions issues
+so create user in docker file 
+and while copying files, change ownership of the files 
+
+	sudo docker run -p 3000:3000 -v /home/node/app/node_modules -v $(pwd):/home/node/app tarun097/frontend
+
+
+
+Docker attach
+	> sudo docker attach <docker_id>   // This will only attach to primary process of the container for stdin, stdout, stderr
+
 
